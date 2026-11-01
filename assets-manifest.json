@@ -1,0 +1,29 @@
+{
+  "index.pck": {
+    "size": 224125816,
+    "type": "application/octet-stream",
+    "chunks": [
+      "index.pck.000.bin",
+      "index.pck.001.bin",
+      "index.pck.002.bin",
+      "index.pck.003.bin",
+      "index.pck.004.bin",
+      "index.pck.005.bin",
+      "index.pck.006.bin",
+      "index.pck.007.bin",
+      "index.pck.008.bin",
+      "index.pck.009.bin",
+      "index.pck.010.bin"
+    ],
+    "sha256": "bf5822e7de6710e92d2979143fd3e0e07807ab1da3dfd97dffe4500bcb9f2bcd"
+  },
+  "index.wasm": {
+    "size": 39514754,
+    "type": "application/wasm",
+    "chunks": [
+      "index.wasm.000.bin",
+      "index.wasm.001.bin"
+    ],
+    "sha256": "fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"
+  }
+}

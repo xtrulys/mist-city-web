@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#102029">
+<title>雾城异闻 · 末班车</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#081317;color:#efdfbc;font-family:system-ui,sans-serif;touch-action:none;overscroll-behavior:none;-webkit-user-select:none;user-select:none}
+#canvas{display:block;outline:none}button{font:inherit;color:inherit;background:#203b40;border:1px solid #8a987c;border-radius:2px;padding:10px 16px;min-height:44px;cursor:pointer;touch-action:manipulation}button:disabled{opacity:.5;cursor:wait}button:focus-visible{outline:2px solid #f1cf85}
+.veil{position:fixed;inset:0;z-index:30;background:radial-gradient(ellipse at 50% 25%,#24454b,#081317 75%);display:flex;align-items:center;justify-content:center;padding:max(20px,env(safe-area-inset-top)) max(24px,env(safe-area-inset-right)) max(20px,env(safe-area-inset-bottom)) max(24px,env(safe-area-inset-left))}
+.card{width:min(560px,100%);text-align:center;max-height:100%;overflow:auto;touch-action:pan-y}.eyebrow{letter-spacing:.3em;font-size:12px;color:#96bbb3}h1{font-size:clamp(23px,5vw,34px);margin:14px 0}p{line-height:1.65;color:#b8cdc5;font-size:14px;margin:10px 0}strong{color:#efdfbc}#start{background:#aa8650;color:#0d1b20;border-color:#d8b16b;font-weight:700;min-width:180px;margin:10px}progress{display:block;width:85%;margin:16px auto;accent-color:#c6a463}#notice{white-space:pre-wrap;color:#edb58f}#tools{position:fixed;z-index:15;top:max(4px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);display:flex;gap:5px}#tools button{font-size:11px;padding:4px 9px;min-height:32px;background:#102029d9}#rotate{display:none;z-index:40}#help{display:none}#help button{margin-top:10px}#start-screen[hidden]{display:none}
+@media (orientation:portrait) and (pointer:coarse){#rotate{display:flex}}
+</style>
+<link rel="stylesheet" href="entry.css">
+
+</head>
+<body>
+<canvas id="canvas" tabindex="0">浏览器需要支持 WebGL 2 才能运行游戏。</canvas>
+<div id="tools"><button id="touch-mode" type="button">触屏：关</button><button id="fullscreen" type="button">全屏</button><button id="help-open" type="button">操作说明</button></div>
+<section class="veil" id="start-screen" aria-label="雾城异闻游戏封面"><button id="entry-help" type="button" onclick="window.mistOpenHelp()">操作说明</button><div class="entry-main"><div class="entry-place">重 庆 / 山 城 夜 话</div><h1>雾城异闻</h1><div class="entry-subtitle">— 末 班 车 —</div><div class="entry-english">THE LAST TRAIN</div><button id="start" type="button" aria-label="以游客身份进入游戏">点击进入</button></div><div class="entry-footer"><p id="notice" role="status"></p><progress id="progress" hidden aria-label="游戏资源加载进度"></progress><div class="entry-save">游客游玩 · 进度保存在本机</div></div></section>
+<section class="veil" id="rotate"><div class="card"><div style="font-size:48px">↻</div><h1>请将手机横过来</h1><p>横屏后可使用双手摇杆和战斗按钮。<br>若没有旋转，请关闭手机的竖屏锁定。</p></div></section>
+<section class="veil" id="help"><div class="card"><h1>操作说明</h1><p>安卓浏览器 / iPhone Safari · 建议横屏游玩。<br>左侧摇杆：移动，可与攻击同时按住。<br>奔跑：按住奔跑按钮，同时推动摇杆。<br>攻击：点击普攻，双枪可按住连续射击。<br>技能1 / 2 / 3：对应原 U / I / O，按等级解锁。<br>交互：对应 E，对话、开门、校园应答。<br>机关：对应 F，按住推车或完成持续机关。<br>背包、任务、暂停、剧情下一句：直接点游戏内按钮。</p><p>游客无需注册，进度保存在当前浏览器，不跨设备同步。<br>清除网站数据会删除存档，已有本地存档可继续使用。<br>桌面仍支持原键盘操作；离开页面或打开说明会暂停游戏。</p><button id="help-close" type="button">返回游戏</button></div></section>
+<noscript>请启用 JavaScript 后重新打开。</noscript>
+<script src="chunk_loader.js"></script>
+<script>window.fetch=installMistChunkedFetch({"index.pck":{"size":224125816,"type":"application/octet-stream","chunks":["index.pck.000.bin","index.pck.001.bin","index.pck.002.bin","index.pck.003.bin","index.pck.004.bin","index.pck.005.bin","index.pck.006.bin","index.pck.007.bin","index.pck.008.bin","index.pck.009.bin","index.pck.010.bin"],"sha256":"bf5822e7de6710e92d2979143fd3e0e07807ab1da3dfd97dffe4500bcb9f2bcd"},"index.wasm":{"size":39514754,"type":"application/wasm","chunks":["index.wasm.000.bin","index.wasm.001.bin"],"sha256":"fc74679e3b97f76878947fcd4fbe1268cbfa6188182a2e33bbc3f5dc9bfa57d0"}},window.fetch.bind(window),new URL('.',location.href).href);</script>
+<script src="index.js"></script>
+<script>
+const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":224125816,"index.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+const GODOT_THREADS_ENABLED = false;
+const engine = new Engine(GODOT_CONFIG);
+const canvas = document.getElementById('canvas');
+const params = new URLSearchParams(location.search);
+window.mistTouchEnabled = params.has('touch') ? params.get('touch') !== '0' : (navigator.maxTouchPoints > 0 || matchMedia('(pointer:coarse)').matches);
+const toggle = document.getElementById('touch-mode');
+function updateTouchLabel(){toggle.textContent = '触屏：' + (window.mistTouchEnabled ? '开' : '关');toggle.setAttribute('aria-pressed',String(window.mistTouchEnabled));}
+function release(){if(typeof window.mistReleaseInput === 'function')window.mistReleaseInput();}
+toggle.onclick = () => {release();const mode=window.mistTouchEnabled?'off':'on';window.mistSetTouchMode(mode);if(typeof window.mistPreferenceChanged==='function')window.mistPreferenceChanged('touch',mode);canvas.focus();};
+updateTouchLabel();
+window.mistSetTouchMode = mode => {window.mistTouchEnabled = mode === 'on' || (mode === 'auto' && (params.has('touch') ? params.get('touch') !== '0' : (navigator.maxTouchPoints > 0 || matchMedia('(pointer:coarse)').matches)));updateTouchLabel();};
+window.mistSetMenuVisible = visible => {document.getElementById('tools').style.display=visible||window.mistTouchEnabled?'none':'flex';};
+window.mistRequestFullscreen = async () => {try{if(!document.fullscreenElement && document.documentElement.requestFullscreen)await document.documentElement.requestFullscreen();else if(document.exitFullscreen)await document.exitFullscreen();if(screen.orientation?.lock)await screen.orientation.lock('landscape');}catch(_){}canvas.focus();};
+document.getElementById('fullscreen').onclick = window.mistRequestFullscreen;
+window.mistOpenHelp = () => {release();document.getElementById('help').style.display='flex';};
+document.getElementById('help-open').onclick = window.mistOpenHelp;
+document.getElementById('help-close').onclick = () => {document.getElementById('help').style.display='none';canvas.focus();};
+window.addEventListener('blur',release);
+window.addEventListener('pagehide',release);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)release();});
+window.addEventListener('orientationchange',release);
+window.addEventListener('contextmenu',e=>e.preventDefault());
+document.getElementById('start').onclick = async () => {
+ const start = document.getElementById('start');const notice = document.getElementById('notice');const progress = document.getElementById('progress');
+ start.disabled=true;start.textContent='正在加载…';progress.hidden=false;
+ try{
+  const missing=Engine.getMissingFeatures({threads:GODOT_THREADS_ENABLED});
+  if(missing.length)throw new Error('浏览器缺少所需功能：'+missing.join('、')+'。请更新系统和浏览器后重试。');
+  await engine.startGame({onProgress:(current,total)=>{if(total>0){progress.max=total;progress.value=current;notice.textContent='已加载 '+Math.floor(current/total*100)+'%';}else{progress.removeAttribute('value');notice.textContent='正在准备游戏资源…';}}});
+  document.getElementById('start-screen').hidden=true;canvas.focus();
+ }catch(error){notice.textContent='加载失败：'+error.message+'\n请检查网络并刷新重试。';start.textContent='请刷新后重试';}
+};
+</script>
+</body>
+</html>
+
